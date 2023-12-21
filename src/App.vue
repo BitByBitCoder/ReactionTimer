@@ -3,58 +3,31 @@ import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import Block from './components/Block.vue'
 import { ref } from 'vue'
+
 let isPlaying = ref(false)
-let time = ref(0)
-let myVar = ref(0)
-let notDisable = ref('notDisable')
-
-let disable = false
+let delay = null
 function start() {
-  disable = true
-  let random = 2000 + Math.floor(Math.random() * 3000)
-  console.log(random)
-  var stop = setTimeout(execute, random)
-}
-
-function execute() {
-  console.log('execute')
-  isPlaying.value = !isPlaying.value
-  myVar.value = setInterval(myTimer, 10)
-}
-function myTimer() {
-  time.value = time.value + 1
-}
-
-function clearInterval() {
-  notDisable.value = 'display'
-  console.log('display')
-  clearTimeout(myVar.value)
-}
-
-function click() {
-  console.log('some event')
-}
-function restert() {
-  time.value = 0
-  disable = false
-  notDisable.value = 'notDisable'
-  isPlaying.value = false
+  delay = 2000 + Math.random() * 5000
+  isPlaying.value = true
+  console.log(isPlaying.value, delay)
 }
 </script>
 
 <template>
-  <div class="center">
-    <div>
-      <div class="center"><button :disabled="disable" @click="start">Play</button></div>
-      <div :class="notDisable"><button @click="restert">Restart</button></div>
-      <div class="center"><Block @some-event="clearInterval" v-if="isPlaying" /></div>
-
-      <h1>{{ time }}</h1>
+  <div class="br">
+    <div class="center">
+      <div>
+        <div class="center"><button @click="start">Start</button></div>
+        <Block v-if="isPlaying" :delay="delay" />
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.br {
+  margin-top: 100px;
+}
 .center {
   display: flex;
   justify-content: center;
@@ -64,8 +37,7 @@ header {
   line-height: 1.5;
   max-height: 100vh;
 }
-
-.logo {
+\ .logo {
   display: block;
   margin: 0 auto 2rem;
 }
