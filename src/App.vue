@@ -11,13 +11,19 @@ function start() {
   isPlaying.value = true
   console.log(isPlaying.value, delay)
 }
+
+function test() {
+  isPlaying.value = false
+}
 </script>
 
 <template>
   <div class="br">
     <div class="center">
       <div>
-        <div class="center"><button @click="start">Start</button></div>
+        <div class="center">
+          <button :disabled="isPlaying" @click="start">Start</button>
+        </div>
         <Block v-if="isPlaying" :delay="delay" />
       </div>
     </div>

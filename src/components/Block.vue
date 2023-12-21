@@ -1,12 +1,38 @@
 <script setup>
+import { onMounted, onUnmounted, ref } from 'vue'
+
 const props = defineProps(['delay'])
 function listeningclick() {
   console.log('event')
 }
+onMounted(() => {
+  console.log('mounted')
+  setTimeout(() => {
+    showBlock.value = true
+    startTimer()
+  }, 3000)
+})
+
+onUnmounted(() => {
+  console.log('unmounted')
+})
+let showBlock = ref(false)
+let timer = ref(null)
+let reactionTime = ref(0)
+function startTimer() {
+  timer.value = setInterval(() => {
+    reactionTime.value += 10
+  }, 10)
+}
+
+function stopTimer() {
+  clearInterval(timer.value)
+  console.log(reactionTime.value)
+}
 </script>
 <template>
   <div>
-    <div @dblclick="listeningclick" class="block">click me</div>
+    <div @click="stopTimer" class="block" v-if="showBlock">click Me</div>
     <div>{{ props.helloprops }}</div>
   </div>
 </template>

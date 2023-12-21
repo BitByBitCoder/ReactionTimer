@@ -7,3 +7,7 @@ routing
 compoment
 props
 event listner
+hook lifecycle
+set timer
+set interval
+1
