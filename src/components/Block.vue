@@ -1,16 +1,14 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
-
+const emit = defineEmits(['end'])
 const props = defineProps(['delay'])
-function listeningclick() {
-  console.log('event')
-}
+
 onMounted(() => {
-  console.log('mounted')
+  console.log(props.delay)
   setTimeout(() => {
     showBlock.value = true
     startTimer()
-  }, 3000)
+  }, props.delay)
 })
 
 onUnmounted(() => {
@@ -28,12 +26,12 @@ function startTimer() {
 function stopTimer() {
   clearInterval(timer.value)
   console.log(reactionTime.value)
+  emit('end', reactionTime.value)
 }
 </script>
 <template>
   <div>
     <div @click="stopTimer" class="block" v-if="showBlock">click Me</div>
-    <div>{{ props.helloprops }}</div>
   </div>
 </template>
 

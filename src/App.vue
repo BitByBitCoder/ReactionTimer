@@ -3,9 +3,12 @@ import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
 import Block from './components/Block.vue'
 import { ref } from 'vue'
+import Result from './components/Result.vue'
 
 let isPlaying = ref(false)
-let delay = null
+let score = ref(null)
+let delay = 0
+let showResult = ref(false)
 function start() {
   delay = 2000 + Math.random() * 5000
   isPlaying.value = true
@@ -13,6 +16,14 @@ function start() {
 }
 
 function test() {
+  isPlaying.value = false
+}
+function endGame(reactionTime) {
+  console.log('endgame')
+
+  console.log(reactionTime)
+  score.value = reactionTime
+  showResult.value = true
   isPlaying.value = false
 }
 </script>
@@ -24,7 +35,8 @@ function test() {
         <div class="center">
           <button :disabled="isPlaying" @click="start">Start</button>
         </div>
-        <Block v-if="isPlaying" :delay="delay" />
+        <Block v-if="isPlaying" :delay="delay" @end="endGame" />
+        <Result v-if="showResult" :result="score" />
       </div>
     </div>
   </div>
